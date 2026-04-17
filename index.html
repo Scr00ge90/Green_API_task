@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GREEN-API · Vitaliy Pak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Подключаем Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="https://green-api.com" target="_blank" class="header__logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#31C048"/>
+          <path d="M16 6C10.477 6 6 10.477 6 16C6 17.89 6.525 19.655 7.438 21.162L6 26L10.974 24.587C12.426 25.385 14.16 25.844 16 25.844C21.523 25.844 26 21.367 26 15.844C26 10.321 21.523 6 16 6Z" fill="white"/>
+        </svg>
+        <span class="header__logo-text">GREEN-API</span>
+      </a>
+      <nav class="header__nav">
+        <a href="https://green-api.com/docs/" target="_blank">Документация</a>
+        <a href="https://console.green-api.com" target="_blank" class="header__btn-login">Войти</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__inner">
+      <h1 class="hero__title">Виталий Пак</h1>
+      <p class="hero__subtitle">Тестовое задание на должность
+“Специалист технической поддержки 2 линии”</p>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="layout">
+
+      <!-- LEFT COLUMN -->
+      <div class="controls">
+
+        <!-- Credentials -->
+        <div class="card">
+          <div class="card__header">
+            <span class="card__icon">🔑</span>
+            <h2 class="card__title">Параметры инстанса</h2>
+          </div>
+          <div class="field">
+            <label class="field__label" for="idInstance">idInstance</label>
+            <input class="field__input" type="text" id="idInstance" placeholder="1101XXXXXXXXX" autocomplete="off" />
+          </div>
+          <!-- Поле ApiTokenInstance с маской и иконкой -->
+          <div class="field field-password">
+            <label class="field__label" for="apiToken">ApiTokenInstance</label>
+            <div class="password-wrapper">
+              <input class="field__input" type="password" id="apiToken" placeholder="Ваш токен..." autocomplete="off" />
+              <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instance methods -->
+        <div class="card">
+          <div class="card__header">
+            <span class="card__icon">⚙️</span>
+            <h2 class="card__title">Методы инстанса</h2>
+          </div>
+          <button class="btn btn--outline" onclick="callMethod('getSettings', this)">getSettings</button>
+          <button class="btn btn--outline" onclick="callMethod('getStateInstance', this)">getStateInstance</button>
+        </div>
+
+        <!-- sendMessage -->
+        <div class="card">
+          <div class="card__header">
+            <span class="card__icon">💬</span>
+            <h2 class="card__title">Отправить сообщение</h2>
+          </div>
+          <div class="field">
+            <label class="field__label" for="msgPhone">Номер получателя</label>
+            <input class="field__input" type="text" id="msgPhone" placeholder="77771234567" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="msgText">Текст сообщения</label>
+            <textarea class="field__input field__textarea" id="msgText" rows="3" placeholder="Hello World!"></textarea>
+          </div>
+          <button class="btn btn--primary" onclick="callMethod('sendMessage', this)">sendMessage</button>
+        </div>
+
+        <!-- sendFileByUrl -->
+        <div class="card">
+          <div class="card__header">
+            <span class="card__icon">📎</span>
+            <h2 class="card__title">Отправить файл по URL</h2>
+          </div>
+          <div class="field">
+            <label class="field__label" for="filePhone">Номер получателя</label>
+            <input class="field__input" type="text" id="filePhone" placeholder="77771234567" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="fileUrl">URL файла</label>
+            <input class="field__input" type="text" id="fileUrl" placeholder="https://my.site.com/img/horse.png" />
+          </div>
+          <!-- ПОЛЕ "ИМЯ ФАЙЛА" УДАЛЕНО -->
+          <button class="btn btn--primary" onclick="callMethod('sendFileByUrl', this)">sendFileByUrl</button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="response-col">
+        <div class="card response-card">
+          <div class="card__header">
+            <span class="card__icon">📄</span>
+            <h2 class="card__title">Ответ</h2>
+            <div class="response-meta">
+              <span class="badge" id="methodBadge" style="display:none"></span>
+              <span class="response-time" id="responseTime"></span>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+              <span class="status-dot" id="statusDot"></span>
+              <span class="status-text" id="statusText">Ожидание...</span>
+            </div>
+          </div>
+          <textarea class="response-output" id="response" readonly placeholder="// Ответ метода GREEN-API появится здесь...&#10;// Введите параметры инстанса и нажмите одну из кнопок слева."></textarea>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <span>GREEN API © 2026</span>
+      <a href="https://green-api.com/docs/" target="_blank">Документация</a>
+    </div>
+  </footer>
+
+  <!-- Подключаем JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
